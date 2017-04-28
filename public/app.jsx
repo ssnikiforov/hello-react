@@ -5,8 +5,8 @@ let GreeterMessage = React.createClass({
 
         return (
             <div>
-                <h1>Hello {name}</h1>
-                <p>{message}</p>
+                <h1>Hello {name}!</h1>
+                <p>{message}!</p>
             </div>
         );
     }
@@ -17,19 +17,35 @@ let GreeterForm = React.createClass({
         e.preventDefault();
 
         let name = this.refs.name.value;
+        let message = this.refs.message.value;
+        let updates = {};
 
-        if (name.length > 0) {
+        if (typeof name === "string" && name.length > 0) {
             this.refs.name.value = '';
-            this.props.onNewName(name);
+            updates.name = name;
         }
+
+        if (typeof message === "string" && message.length > 0) {
+            this.refs.message.value = '';
+            updates.message = message;
+        }
+
+        this.props.onUpdates(updates);
     },
 
     render: function() {
         return (
             <div>
                 <form onSubmit={this.onFormSubmit}>
-                    <input type="text" ref="name"/>
-                    <button>Set Name</button>
+                    <div>
+                        <input type="text" ref="name" placeholder="Enter your name"/>
+                    </div>
+                    <div>
+                        <textarea ref="message" rows="3" placeholder="Enter the message"/>
+                    </div>
+                    <div>
+                        <button>Submit</button>
+                    </div>
                 </form>
             </div>
         );
@@ -46,32 +62,30 @@ let Greeter = React.createClass({
 
     getInitialState: function() {
         return {
-            name: this.props.name
+            name: this.props.name,
+            message: this.props.message
         };
     },
 
-    handleNewName: function(name) {
-        this.setState({
-            name: name
-        });
+    handleUpdates: function(updates) {
+        this.setState(updates);
     },
 
     render: function() {
         let name = this.state.name;
-        let message = this.props.message;
+        let message = this.state.message;
 
         return (
             <div>
                 <GreeterMessage name={name} message={message}/>
-                <GreeterForm onNewName={this.handleNewName}/>
+                <GreeterForm onUpdates={this.handleUpdates}/>
             </div>
         );
     }
 });
 
-let name = "Friend";
-// let message = undefined;
-let message = "This is not default message";
+let name;
+let message;
 
 ReactDOM.render(
     <Greeter name={name} message={message}/>,
