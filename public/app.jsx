@@ -1,5 +1,5 @@
 let GreeterMessage = React.createClass({
-    render: function() {
+    render: function () {
         let name = this.props.name;
         let message = this.props.message;
 
@@ -13,7 +13,7 @@ let GreeterMessage = React.createClass({
 });
 
 let GreeterForm = React.createClass({
-    onFormSubmit: function(e) {
+    onFormSubmit: function (e) {
         e.preventDefault();
 
         let name = this.refs.name.value;
@@ -33,7 +33,7 @@ let GreeterForm = React.createClass({
         this.props.onUpdates(updates);
     },
 
-    render: function() {
+    render: function () {
         return (
             <div>
                 <form onSubmit={this.onFormSubmit}>
@@ -53,25 +53,25 @@ let GreeterForm = React.createClass({
 });
 
 let Greeter = React.createClass({
-    getDefaultProps: function() {
+    getDefaultProps: function () {
         return {
             name: 'React',
             message: 'This is from component'
         };
     },
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             name: this.props.name,
             message: this.props.message
         };
     },
 
-    handleUpdates: function(updates) {
+    handleUpdates: function (updates) {
         this.setState(updates);
     },
 
-    render: function() {
+    render: function () {
         let name = this.state.name;
         let message = this.state.message;
 
