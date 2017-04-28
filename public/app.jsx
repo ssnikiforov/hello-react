@@ -1,3 +1,41 @@
+let GreeterMessage = React.createClass({
+    render: function() {
+        let name = this.props.name;
+        let message = this.props.message;
+
+        return (
+            <div>
+                <h1>Hello {name}</h1>
+                <p>{message}</p>
+            </div>
+        );
+    }
+});
+
+let GreeterForm = React.createClass({
+    onFormSubmit: function(e) {
+        e.preventDefault();
+
+        let name = this.refs.name.value;
+
+        if (name.length > 0) {
+            this.refs.name.value = '';
+            this.props.onNewName(name);
+        }
+    },
+
+    render: function() {
+        return (
+            <div>
+                <form onSubmit={this.onFormSubmit}>
+                    <input type="text" ref="name"/>
+                    <button>Set Name</button>
+                </form>
+            </div>
+        );
+    }
+});
+
 let Greeter = React.createClass({
     getDefaultProps: function() {
         return {
@@ -12,20 +50,10 @@ let Greeter = React.createClass({
         };
     },
 
-    onButtonClick: function(e) { //callback
-        e.preventDefault(); // у нас single page application, поэтому нам не нужно перезагружать страницу
-
-        let nameRef = this.refs.name;
-        let name = nameRef.value;
-        nameRef.value = ''; // очищаем содержимое инпута
-
-        if (typeof name === 'string' && name.length > 0) {
-            this.setState({
-                name: name
-            });
-            // alert(name);
-
-        }
+    handleNewName: function(name) {
+        this.setState({
+            name: name
+        });
     },
 
     render: function() {
@@ -34,20 +62,16 @@ let Greeter = React.createClass({
 
         return (
             <div>
-                <h1>Hello {name}!</h1>
-                <p>{message}</p>
-
-                <form onSubmit={this.onButtonClick}>
-                    <input type="text" ref="name"/>
-                    <button>Set Name</button>
-                </form>
+                <GreeterMessage name={name} message={message}/>
+                <GreeterForm onNewName={this.handleNewName}/>
             </div>
         );
     }
 });
 
-let name = "Stepan";
-let message = undefined;
+let name = "Friend";
+// let message = undefined;
+let message = "This is not default message";
 
 ReactDOM.render(
     <Greeter name={name} message={message}/>,
