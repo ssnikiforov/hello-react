@@ -6,16 +6,30 @@ let Greeter = React.createClass({
         };
     },
 
+    getInitialState: function() {
+        return {
+            name: this.props.name
+        };
+    },
+
     onButtonClick: function(e) { //callback
         e.preventDefault(); // у нас single page application, поэтому нам не нужно перезагружать страницу
 
-        let name = this.refs.name.value;
+        let nameRef = this.refs.name;
+        let name = nameRef.value;
+        nameRef.value = ''; // очищаем содержимое инпута
 
-        alert(name);
+        if (typeof name === 'string' && name.length > 0) {
+            this.setState({
+                name: name
+            });
+            // alert(name);
+
+        }
     },
 
     render: function() {
-        let name = this.props.name;
+        let name = this.state.name;
         let message = this.props.message;
 
         return (
