@@ -1,2 +1,5 @@
 Run server: 
-node server.js
+`node server.js`
+
+Run webpack in watching mode: 
+`webpack -w`
