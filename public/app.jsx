@@ -1,3 +1,6 @@
+let React = require('react');
+let ReactDOM = require('react-dom');
+
 let GreeterMessage = React.createClass({
     render: function () {
         let name = this.props.name;
